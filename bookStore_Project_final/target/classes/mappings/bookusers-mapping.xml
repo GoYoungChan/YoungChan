@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BSUsersDAO">
+	<insert id="insertUser">
+		<![CDATA[
+			insert into bsUsers (bs_id, bs_pass, bs_name, bs_birth, bs_email, bs_email_get, bs_phone, bs_zipcode, bs_addr1, bs_addr2, role) 
+				values( #{bs_id},#{bs_pass},#{bs_name},#{bs_birth},#{bs_email},#{bs_email_get},#{bs_phone},#{bs_zipcode},#{bs_addr1},#{bs_addr2},'User')
+		]]>	
+	</insert>
+	
+	<!-- 회원 전체 조회 -->
+	<select id="selectUsers" resultType="bsuser" >
+		<![CDATA[
+			select * from bsUsers order by join_date desc
+		]]>	
+	</select>
+
+	<!-- 회원 검색 -->
+	<select id="selectUser" resultType="bsuser" >
+		<![CDATA[
+			select * from bsUsers where bs_id=#{bs_id}
+		]]>	
+	</select>
+	
+	<!-- 아아디/비번 검색 -->
+	<select id="find" resultType="bsuser" >
+		<![CDATA[
+			select * from bsUsers where bs_email=#{bs_email}
+		]]>	
+	</select>
+	
+	<!-- 주문 내역 조회 -->
+	<select id="selectNon_User" resultType="bsuser" >
+		<![CDATA[
+			select * from bsUsers where oder_member=#{oder_member}
+		]]>	
+	</select>
+	<!-- 회원 수정 -->
+	<update id="updateUser">
+		<![CDATA[
+		update bsUsers set bs_pass=#{bs_pass}
+							 , bs_email=#{bs_email}
+							 , bs_phone=#{bs_phone}
+							 , bs_zipcode=#{bs_zipcode}
+							 , bs_addr1=#{bs_addr1}
+							 , bs_addr2=#{bs_addr2}
+							 where bs_id=#{bs_id}
+		]]>	
+	</update>
+	<!-- 회원 탈퇴 -->	
+	<delete id="deleteUser">
+		<![CDATA[
+			delete from bsUsers where bs_id=#{bs_id}
+		]]>
+	</delete>
+
+	<!-- 우편변호 검색 -->
+	<select id="selectzipcode" resultType="zipcode">
+		<![CDATA[
+			select * from zipcode where dong=#{dong}
+		]]>
+	</select>
+	
+</mapper>

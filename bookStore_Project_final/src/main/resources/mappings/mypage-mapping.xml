@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BSBoardDAO">
+	
+	<!-- 회원 커뮤니티 글 입력  -->
+	<insert id="insertBoard">
+		<![CDATA[
+			insert into reqBoard (req_seq, req_title, req_content) 
+				values((select nvl(max(req_seq), 0)+1 from reqBoard),#{req_title},#{req_content})
+		]]> 
+	</insert>
+	
+	<!-- 회원 커뮤니티 글 목록 전체조회 -->
+	<select id="getBoardList" resultType="bsboard" >
+		<![CDATA[
+			select * from reqBoard order by req_seq desc
+		]]>	
+	</select>
+	
+	<!-- 회원 커뮤니티 글 목록 상세조회 -->
+	<select id="getBoard" resultType="bsboard">
+		<![CDATA[
+			select * from reqBoard where req_seq=#{req_seq}
+		]]>		
+	</select>
+	
+	<!-- 회원 커뮤니티 글 수정 -->
+	<select id="upBoard" resultType="bsboard">
+		<![CDATA[
+			update reqBoard set req_title=#{req_title}, req_content=#{req_content} where req_seq=#{req_seq}
+		]]>		
+	</select>
+	
+		<!-- 회원 커뮤니티 글 삭제 -->
+	<select id="delete" resultType="bsboard">
+		<![CDATA[
+			delete from reqBoard where req_seq=#{req_seq}
+		]]>		
+	</select>
+
+	
+</mapper>
